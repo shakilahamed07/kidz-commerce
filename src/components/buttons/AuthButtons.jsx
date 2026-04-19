@@ -1,10 +1,12 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function AuthButtons() {
   const session = useSession();
+  const path = usePathname();
   return (
     <div>
       {session.status == "authenticated" ? (
@@ -12,7 +14,7 @@ export default function AuthButtons() {
           LogOut
         </button>
       ) : (
-        <Link href={"/login"} className="btn btn-primary">
+        <Link href={`/login?callbackUrl=${path}`} className="btn btn-primary">
           Login
         </Link>
       )}

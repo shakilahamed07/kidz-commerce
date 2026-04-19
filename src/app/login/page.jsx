@@ -41,9 +41,18 @@ export default function Login() {
     const data = Object.fromEntries(formData.entries());
 
     const result = await postUser(data);
+
     if (result?.insertedId) {
       alert(`${result?.insertedId}`);
-      setIsLogin(true);
+
+      // login user
+      const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      // redirect: false,
+      callbackUrl: `${callbackurl}`
+    });
+
     } else {
       alert("Sumething wrong!");
     }
@@ -51,7 +60,7 @@ export default function Login() {
 
   // Google login
   const handelGoogle = async () => {
-    const res = await signIn("google", {redirect: "false", callbackUrl: `${callbackurl}`});
+    const res = await signIn("google", { callbackUrl: `${callbackurl}`});
   };
 
   return (
