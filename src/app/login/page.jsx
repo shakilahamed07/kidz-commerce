@@ -2,14 +2,15 @@
 
 import { postUser } from "@/action/server/auth";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { FaEnvelope, FaLock, FaGoogle, FaUser } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
-  const router = useRouter();
+  const params = useSearchParams();
+  const callbackurl = params.get("callbackUrl" || "/")
 
   // --- Form Submission Handlers ---
 
@@ -22,18 +23,15 @@ export default function Login() {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      redirect: false,
+      // redirect: false,
+      callbackUrl: `${callbackurl}`
     });
 
     if (res?.ok) {
-      Swal.fire("success", "Login Sucessfully", "success")
-      router.push(`/`)
+      Swal.fire("success", "Login Sucessfully", "success");
     } else {
-      Swal.fire("error", "Email & password not matched", "error")
+      Swal.fire("error", "Email & password not matched", "error");
     }
-
-    console.log("Login Data:", data);
-    // You can call your API here: e.g., await axios.post('/api/login', data)
   };
 
   // Register Handler
@@ -49,6 +47,11 @@ export default function Login() {
     } else {
       alert("Sumething wrong!");
     }
+  };
+
+  // Google login
+  const handelGoogle = async () => {
+    const res = await signIn("google", {redirect: "false", callbackUrl: `${callbackurl}`});
   };
 
   return (
@@ -158,7 +161,10 @@ export default function Login() {
           </div>
 
           {/* Social Auth */}
-          <button className="btn btn-outline w-full border-base-300 gap-3 hover:bg-base-200 transition-all">
+          <button
+            onClick={handelGoogle}
+            className="btn btn-outline w-full border-base-300 gap-3 hover:bg-base-200 transition-all"
+          >
             <FaGoogle className="text-red-500" />
             <span className="normal-case">Continue with Google</span>
           </button>
