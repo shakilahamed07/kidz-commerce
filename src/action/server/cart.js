@@ -112,3 +112,13 @@ export const dicreaseItemDb = async (id, quantity) => {
   const result = await cartCollctions.updateOne(query, updateData)
   return {success: Boolean(result.modifiedCount)};
 };
+
+export const clearCart = async ()=> {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user) return false;
+
+  const query = { email: user.email };
+
+  const result = await cartCollctions.deleteMany(query);
+  return {success: result.deletedCount}
+}

@@ -6,6 +6,7 @@ export const collctions = {
     PRODUCTS: 'products',
     USERS: 'users',
     CART: 'cart',
+    ODER: 'oder',
 }
 
 const client = new MongoClient(uri, {

@@ -132,9 +132,9 @@ export default function Cart({ cartItems = [] }) {
             </div>
 
             <div className="form-control mt-8">
-              <button className="btn btn-primary btn-block h-16 text-lg font-bold shadow-lg hover:scale-[1.02] active:scale-95 transition-all">
-                Proceed to Payment
-              </button>
+              <Link href={'chackout'} className="btn btn-primary btn-block h-16 text-lg font-bold shadow-lg hover:scale-[1.02] active:scale-95 transition-all">
+                Comfrom Oder
+              </Link>
             </div>
           </div>
         </div>
