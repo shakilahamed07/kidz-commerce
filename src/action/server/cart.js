@@ -66,9 +66,49 @@ export const cartDeleteItem = async (id) => {
 
   const result = await cartCollctions.deleteOne(query);
 
-  if(result.deletedCount){
-    revalidatePath('/cart')
-  }
+  // if(result.deletedCount){
+  //   revalidatePath('/cart')
+  // }
 
   return { success: Boolean(result.deletedCount) };
+};
+
+export const increaseItemDb = async (id, quantity) => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user) return false;
+
+  if (quantity >= 10) {
+    return { success: false , message: "you can't bay 10 product as a time"};
+  }
+
+  const query = { _id: new ObjectId(id) };
+
+  const updateData = {
+      $inc: {
+        quantity: 1,
+      },
+  }
+
+  const result = await cartCollctions.updateOne(query, updateData)
+  return {success: Boolean(result.modifiedCount)};
+};
+
+export const dicreaseItemDb = async (id, quantity) => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user) return false;
+
+  if (quantity <= 1) {
+    return { success: false , message: "you can't bay 10 product as a time"};
+  }
+
+  const query = { _id: new ObjectId(id) };
+
+  const updateData = {
+      $inc: {
+        quantity: -1,
+      },
+  }
+
+  const result = await cartCollctions.updateOne(query, updateData)
+  return {success: Boolean(result.modifiedCount)};
 };
