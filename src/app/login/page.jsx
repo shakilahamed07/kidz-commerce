@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const params = useSearchParams();
-  const callbackurl = params.get("callbackUrl" || "/")
+  const callbackurl = params.get("callbackUrl" || "/");
 
   // --- Form Submission Handlers ---
 
@@ -24,7 +24,7 @@ export default function Login() {
       email: data.email,
       password: data.password,
       // redirect: false,
-      callbackUrl: `${callbackurl}`
+      callbackUrl: callbackurl || "/",
     });
 
     if (res?.ok) {
@@ -47,21 +47,22 @@ export default function Login() {
 
       // login user
       const res = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      // redirect: false,
-      callbackUrl: `${callbackurl}`
-    });
-
+        email: data.email,
+        password: data.password,
+        // redirect: false,
+        callbackUrl: `${callbackurl}`,
+      });
     } else {
       alert("Sumething wrong!");
     }
   };
 
   // Google login
-  const handelGoogle = async () => {
-    const res = await signIn("google", { callbackUrl: `${callbackurl}`});
-  };
+    const handelGoogle = () => {
+      signIn("google", {
+        callbackUrl: callbackurl || "/",
+      });
+    };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 px-4 py-8 md:p-8">

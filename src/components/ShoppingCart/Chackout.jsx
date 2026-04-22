@@ -243,6 +243,7 @@ const Checkout = ({ cartItems = [] }) => {
                 <div className="mt-8">
                   <button
                     type="submit"
+                    disabled={cartItems.length < 1}
                     className="btn btn-primary btn-block h-16 rounded-2xl shadow-xl hover:scale-[1.02] active:scale-95 transition-all text-lg font-bold gap-3 group"
                   >
                     <HiOutlineBadgeCheck
