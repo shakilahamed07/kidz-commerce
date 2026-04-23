@@ -45,12 +45,13 @@ const Checkout = ({ cartItems = [] }) => {
       deliveryAddress: address,
       subtotal: subtotal,
       paymentMethod: "Cash on Delivery",
+      status:"Order Received"
     };
 
     const result = await createOder(payload);
 
     if(result.success){
-        router.push('/')
+        router.push('/my-orders')
         Swal.fire("success", "Add Oder Successfully", "success")
     }
     else{

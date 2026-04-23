@@ -1,7 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
-const privateRoute = ["/chackout", "/dashbord", "/cart"];
+const privateRoute = ["/chackout", "/my-orders", "/cart"];
 
 export async function proxy(req) {
   const token = await getToken({ req , secret: process.env.NEXTAUTH_SECRET});
@@ -21,5 +21,5 @@ export async function proxy(req) {
 }
 
 export const config = {
-  matcher: ["/chackout/:path*", "/dashbord/:path*", "/cart/:path*"],
+  matcher: ["/chackout/:path*", "/my-orders/:path*", "/cart/:path*"],
 };

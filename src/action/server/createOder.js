@@ -28,7 +28,6 @@ export const createOder = async (payload) => {
   const result = await oderCollctions.insertOne(oderData);
 
   if (Boolean(result.insertedId)) {
-
     for (const item of cart) {
       await productCollections.updateOne(
         { _id: new ObjectId(item.productId) },
@@ -51,4 +50,14 @@ export const createOder = async (payload) => {
   }
 
   return { success: Boolean(result.insertedId) };
+};
+
+export const getOrader = async () => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if(!user) return [];
+
+  const query = {customerEmail: user.email};
+
+  const result = await oderCollctions.find(query).sort({ oderAt: -1 }).toArray();
+  return result;
 };

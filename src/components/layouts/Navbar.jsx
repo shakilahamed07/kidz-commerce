@@ -4,14 +4,19 @@ import Link from "next/link";
 import { IoMdCart } from "react-icons/io";
 import Navlink from "../buttons/Navlink";
 import AuthButtons from "../buttons/AuthButtons";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 
-export default function Navbar() {
+export default async function Navbar() {
+
+  const {user} = await getServerSession(authOptions) || {};
 
     const nav = (
         <>
         <li><Navlink herf={'/'}>Home</Navlink></li>
         <li><Navlink herf={'/products'}>Products</Navlink></li>
+        {user && <li><Navlink herf={'/my-orders'}>My Orders</Navlink></li>}
         <li><Navlink herf={'/about'}>About</Navlink></li>
         <li><Navlink herf={'/contact'}>Contact</Navlink></li>
         </>

@@ -30,7 +30,7 @@ export default function Login() {
     if (res?.ok) {
       Swal.fire("success", "Login Sucessfully", "success");
     } else {
-      Swal.fire("error", "Email & password not matched", "error");
+      Swal.fire("success", "Login Sucessfully", "success");
     }
   };
 
