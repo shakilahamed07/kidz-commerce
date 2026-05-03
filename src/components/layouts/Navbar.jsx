@@ -18,7 +18,6 @@ export default async function Navbar() {
         <li><Navlink herf={'/products'}>Products</Navlink></li>
         {user && <li><Navlink herf={'/my-orders'}>My Orders</Navlink></li>}
         <li><Navlink herf={'/about'}>About</Navlink></li>
-        <li><Navlink herf={'/contact'}>Contact</Navlink></li>
         </>
     )
 
