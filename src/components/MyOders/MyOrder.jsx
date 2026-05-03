@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 import {
   HiOutlineDotsVertical,
@@ -145,9 +146,9 @@ const MyOrder = ({ orders }) => {
               </div>
 
               <div className="flex md:flex-col gap-3 w-full md:w-auto mx-5 mt-8 md:pr-0 pr-10">
-                <button className="btn btn-primary btn-sm flex-1 md:w-40  gap-2 rounded-lg py-2">
+                <Link href={`/my-orders/${order._id}`} className="btn btn-primary btn-sm flex-1 md:w-40  gap-2 rounded-lg py-2">
                   <MdOutlineLocalShipping /> Track Order
-                </button>
+                </Link>
                 <button className="btn btn-outline btn-sm flex-1 md:w-40  gap-2 rounded-lg py-2">
                   <MdOutlineReceipt /> View Receipt
                 </button>

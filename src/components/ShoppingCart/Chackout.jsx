@@ -5,12 +5,15 @@ import {
   HiOutlineTruck,
   HiOutlineBadgeCheck,
   HiOutlineInformationCircle,
+  HiOutlineHome,
+  HiOutlineClock,
 } from "react-icons/hi";
 import {
   MdOutlineLocationOn,
   MdOutlineAssignment,
   MdOutlineEmail,
   MdOutlinePerson,
+  MdOutlineInventory2,
 } from "react-icons/md";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -37,6 +40,16 @@ const Checkout = ({ cartItems = [] }) => {
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
 
+
+    // Calculate shiping and delivary date
+    const orderDate = new Date();
+      orderDate.setDate(orderDate.getDate() + 1);
+    const shipingDate = orderDate.toLocaleDateString("en-GB");
+    
+      const orderDate2 = new Date();
+      orderDate2.setDate(orderDate2.getDate() + 3);
+    const delivaryDate = orderDate2.toLocaleDateString("en-GB");
+
     // Construct the final data object
     const payload = {
       customerName: session?.data?.user?.name,
@@ -45,7 +58,12 @@ const Checkout = ({ cartItems = [] }) => {
       deliveryAddress: address,
       subtotal: subtotal,
       paymentMethod: "Cash on Delivery",
-      status:"Order Received"
+      steps : [
+        { title: "Order Placed", date: new Date().toLocaleDateString("en-GB"), status: "completed" },
+        { title: "Processing", date: new Date().toLocaleDateString("en-GB"),  status: "current" },
+        { title: "Shipped", date:"Expected  " + shipingDate, status: "upcoming" },
+        { title: "Delivered", date:"Expected  " + delivaryDate, status: "upcoming" },
+      ],
     };
 
     const result = await createOder(payload);

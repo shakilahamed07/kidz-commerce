@@ -54,10 +54,27 @@ export const createOder = async (payload) => {
 
 export const getOrader = async () => {
   const { user } = (await getServerSession(authOptions)) || {};
-  if(!user) return [];
+  if (!user) return [];
 
-  const query = {customerEmail: user.email};
+  const query = { customerEmail: user.email };
 
-  const result = await oderCollctions.find(query).sort({ oderAt: -1 }).toArray();
+  const result = await oderCollctions
+    .find(query)
+    .sort({ oderAt: -1 })
+    .toArray();
   return result;
 };
+
+export const getOderById = async (id) => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user) return null;
+
+  const query = { _id: new ObjectId(id), customerEmail: user.email };
+  const result = await oderCollctions.findOne(query);
+  return {
+    ...result,
+    _id: result._id.toString(),
+    items: []
+  };
+};
+
