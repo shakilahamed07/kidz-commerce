@@ -112,21 +112,22 @@ export default function Cart({ cartItems = [] }) {
                   ৳{subtotal.toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
-                <span className="font-medium">Shipping</span>
-                <span className="text-success font-bold uppercase text-xs badge badge-success badge-outline">
-                  Free
-                </span>
-              </div>
-              <div className="flex justify-between text-gray-600 border-b border-dashed pb-4">
+              <div className="flex justify-between text-gray-600 ">
                 <span className="font-medium">Discount</span>
                 <span className="font-bold text-error">- ৳0.00</span>
               </div>
+              <div className="flex justify-between text-gray-600 border-b border-dashed pb-4">
+                <span className="font-medium">Deliverey Cost</span>
+                <span className="text-success font-bold uppercase text-xs badge badge-success badge-outline">
+                  60 tk
+                </span>
+              </div>
+              
 
               <div className="flex justify-between text-2xl font-black pt-2">
                 <span>Grand Total</span>
                 <span className="text-secondary">
-                  ৳{subtotal.toLocaleString()}
+                  ৳{Number(subtotal)+60}
                 </span>
               </div>
             </div>

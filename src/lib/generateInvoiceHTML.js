@@ -52,6 +52,10 @@ export const generateInvoiceHTML = (orderData, user) => {
             <td style="width: 220px;">
               <table style="width: 100%; font-size: 14px;">
                 <tr>
+                  <td style="padding: 5px 0; color: #777;">Delivary Cost:</td>
+                  <td style="padding: 5px 0; text-align: right; color: #333;">${orderData.deliveryCost} TK</td>
+                </tr>
+                <tr>
                   <td style="padding: 5px 0; color: #777;">Order Date:</td>
                   <td style="padding: 5px 0; text-align: right; color: #333;">${new Date(orderData.oderAt).toLocaleDateString()}</td>
                 </tr>

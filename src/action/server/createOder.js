@@ -25,6 +25,7 @@ export const createOder = async (payload) => {
   };
   // console.log(oderData)
 
+
   const result = await oderCollctions.insertOne(oderData);
 
   if (Boolean(result.insertedId)) {

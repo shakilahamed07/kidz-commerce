@@ -56,7 +56,8 @@ const Checkout = ({ cartItems = [] }) => {
       customerEmail: session?.data?.user?.email,
       phoneNumber: `+88${phone}`,
       deliveryAddress: address,
-      subtotal: subtotal,
+      deliveryCost: 60,
+      subtotal: subtotal+60,
       paymentMethod: "Cash on Delivery",
       steps : [
         { title: "Order Placed", date: new Date().toLocaleDateString("en-GB"), status: "completed" },
@@ -245,6 +246,12 @@ const Checkout = ({ cartItems = [] }) => {
                       </div>
                     </div>
                   ))}
+                  <div className="flex justify-between text-gray-600 pt-5 -pb-5">
+                <span className="font-medium">Deliverey Cost</span>
+                <span className="text-success font-bold uppercase text-xs badge badge-success badge-outline">
+                  60 tk
+                </span>
+              </div>
                 </div>
 
                 {/* Calculation Grid */}
