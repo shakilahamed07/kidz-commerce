@@ -6,11 +6,14 @@ import Navlink from "../buttons/Navlink";
 import AuthButtons from "../buttons/AuthButtons";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+import { getCart } from "@/action/server/cart";
+import UserButtonLogo from "../buttons/UserButtonLogo";
 
 
 export default async function Navbar() {
 
   const {user} = await getServerSession(authOptions) || {};
+  const cartItems = await getCart() || [];
 
     const nav = (
         <>
@@ -57,10 +60,13 @@ export default async function Navbar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link href={'/cart'}>
-        <IoMdCart className="ml-2 mr-7" size={35} />
+        <Link className="flex items-center justify-center relative ml-2 mr-7" href={'/cart'}>
+        <IoMdCart className="" size={35} />
+        <span className="font-bold absolute -top-2 -right-2 bg-primary rounded-full px-2 text-white">{cartItems.length}</span>
         </Link>
-        <AuthButtons/>
+        {
+          user ?  <UserButtonLogo/> : <AuthButtons/>
+        }
       </div>
     </div>
   );

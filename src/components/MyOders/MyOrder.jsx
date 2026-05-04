@@ -10,9 +10,12 @@ import {
   MdOutlineShoppingBag,
   MdOutlineLocalShipping,
   MdOutlineReceipt,
+  MdDeliveryDining,
 } from "react-icons/md";
 
 const MyOrder = ({ orders }) => {
+
+  
   return (
     <div className="container mx-auto px-4 max-w-6xl">
       {/* Header Section */}
@@ -149,8 +152,8 @@ const MyOrder = ({ orders }) => {
                 <Link href={`/my-orders/${order._id}`} className="btn btn-primary btn-sm flex-1 md:w-40  gap-2 rounded-lg py-2">
                   <MdOutlineLocalShipping /> Track Order
                 </Link>
-                <button className="btn btn-outline btn-sm flex-1 md:w-40  gap-2 rounded-lg py-2">
-                  <MdOutlineReceipt /> View Receipt
+                <button className="btn  btn-sm flex-1 md:w-40 gap-2 rounded-lg py-1 bg-gray-300/50 ">
+                  <MdDeliveryDining size={30}/> {order.deliveryCost} TK 
                 </button>
               </div>
             </div>
