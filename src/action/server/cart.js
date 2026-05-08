@@ -47,14 +47,21 @@ export const handelAction = async ({ product, inc }) => {
 };
 
 export const getCart = cache(async () => {
-  const { user } = (await getServerSession(authOptions)) || {};
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+
   if (!user) return [];
 
   const query = { email: user.email };
 
   const result = await cartCollctions.find(query).toArray();
 
-  return result;
+  const plainResult = result.map((item) => ({
+    ...item,
+    _id: item._id.toString(),
+  }));
+
+  return plainResult;
 });
 
 export const cartDeleteItem = async (id) => {

@@ -2,11 +2,12 @@
 
 import { collctions, connect } from "@/lib/connect"
 import { ObjectId } from "mongodb"
+import { cache } from "react";
 
-export const GetProducts = async ()=>{
-    const result = await connect(collctions.PRODUCTS).find().toArray()
+export const GetProducts = cache(async () => {
+    const result = await connect(collctions.PRODUCTS).find().toArray();
     return result;
-}
+});
 
 export const getSinglePoducts = async (id) => {
     const query = { _id: new ObjectId(id)}

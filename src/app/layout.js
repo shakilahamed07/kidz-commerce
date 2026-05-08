@@ -85,15 +85,17 @@ export const metadata = {
   category: "ecommerce",
 };
 
+
 export default function RootLayout({ children }) {
+
   return (
     <NextAuthProvider>
       <html lang="en" className={`${popins.className} antialiased`}>
         <body className="min-h-full flex flex-col">
-          <header className="py-2 md:w-11/12 md:mx-auto">
+          <header className=" md:w-11/12 md:mx-auto">
             <Navbar />
           </header>
-          <main className="py-2 md:w-11/12 mx-auto min-h[calc(100vh-302px)]">
+          <main className="">
             {children}
           </main>
           <footer className="">
