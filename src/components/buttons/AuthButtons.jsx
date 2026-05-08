@@ -10,7 +10,7 @@ export default function AuthButtons() {
   return (
     <div>
       {session.status == "authenticated" ? (
-        <button onClick={() => signOut()} className="btn btn-primary">
+        <button onClick={() => signOut()} className="btn btn-primary w-full">
           LogOut
         </button>
       ) : (

@@ -7,6 +7,6 @@ import React from 'react'
 export default function Navlink({herf, children}) {
     const pathName = usePathname();
   return (
-    <Link className={`${pathName == herf ? "text-primary" : ""} font-medium`} href={herf}>{children}</Link>
+    <Link className={`${pathName == herf ? "text-primary" : ""} lg:font-medium font-bold`} href={herf}>{children}</Link>
   )
 }

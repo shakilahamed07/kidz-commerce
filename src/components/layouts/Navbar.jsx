@@ -17,7 +17,7 @@ export default async function Navbar() {
 
     const nav = (
         <>
-        <li><Navlink herf={'/'}>Home</Navlink></li>
+        <li ><Navlink herf={'/'}>Home</Navlink></li>
         <li><Navlink herf={'/products'}>Products</Navlink></li>
         {user && <li><Navlink herf={'/my-orders'}>My Orders</Navlink></li>}
         <li><Navlink herf={'/about'}>About</Navlink></li>
@@ -47,7 +47,7 @@ export default async function Navbar() {
           </div>
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box w-40 py-5 px-3 shadow-xl z-50 space-y-3"
           >
             {nav}
           </ul>
