@@ -39,6 +39,9 @@ export const handelAction = async ({ product, inc }) => {
     };
 
     const result = await cartCollctions.insertOne(cartData);
+    if(result.acknowledged){
+      revalidatePath('/cart')
+    }
     return { success: result.acknowledged };
   }
 };
