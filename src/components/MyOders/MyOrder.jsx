@@ -67,7 +67,7 @@ const MyOrder = ({ orders }) => {
                     Order ID
                   </p>
                   <p className="text-sm font-mono font-bold uppercase">
-                    #{order._id.slice(-8)}
+                    #{order._id}
                   </p>
                 </div>
                 <div>

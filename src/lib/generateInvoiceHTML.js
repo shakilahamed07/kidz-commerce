@@ -20,7 +20,7 @@ export const generateInvoiceHTML = (orderData, user) => {
           <tr>
             <td>
               <h1 style="margin: 0; color: #333; font-size: 24px;">INVOICE</h1>
-              <p style="margin: 5px 0 0; color: #777; font-size: 14px;">Order #${orderData._id?.toString().slice(-6).toUpperCase() || 'N/A'}</p>
+              <p style="margin: 5px 0 0; color: #777; font-size: 14px;">ORDER ID: #${orderData._id?.toString() || 'N/A'}</p>
             </td>
             <td style="text-align: right;">
               <div style="font-weight: bold; color: #007bff; font-size: 20px;">KIDZ COMMERCE</div>

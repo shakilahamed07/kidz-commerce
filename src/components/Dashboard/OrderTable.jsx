@@ -3,11 +3,29 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { HiOutlineDotsVertical, HiOutlineEye } from "react-icons/hi";
 import OrderDetailsModal from "./OrderDetailsModal";
+import { orderCancelAdmin, updateOrderStatusAdmin } from "@/action/server/order";
+import Swal from "sweetalert2";
 
 export default function OrderTable({ order }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const currentStep =
-    order.steps?.find((s) => s.status === "current") || order.steps?.[0];
+  const currentStep = order.steps?.find((s) => s.status === "current") || order.steps?.[3];
+  const currrentStepIndex = order.steps.findIndex(s => s.status === "current");
+
+  // Cancel order
+  const cancelOrder = async (id) => {
+    const res = await orderCancelAdmin(id);
+    return res.success
+      ? Swal.fire("success", "Order canceled successfully", "success")
+      : Swal.fire("error", "Failed to cancel order", "error");
+  };
+
+  // Update order status to next step
+  const updateOrderStatus = async (id, currentIndex) => {
+    console.log("Updating order status for ID:", id, "Current Step Index:", currentIndex);
+    const res = await updateOrderStatusAdmin(id, currentIndex);
+    console.log("Update response:", res.message);
+    return res.success? Swal.fire("success", "Order status updated successfully", "success") : Swal.fire("error", "Failed to update order status", "error");
+  };
 
   return (
     <>
@@ -23,7 +41,7 @@ export default function OrderTable({ order }) {
             </span>
             <div className="flex items-center gap-2 mt-1">
               <span className="text-[9px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-black uppercase">
-                ID: {order._id.toString().slice(-6)}
+                ID: {order._id.toString()}
               </span>
             </div>
           </div>
@@ -79,12 +97,13 @@ export default function OrderTable({ order }) {
                 ${currentStep?.title === "Processing" ? "bg-amber-100 text-amber-700" : ""}
                 ${currentStep?.title === "Shipped" ? "bg-indigo-100 text-indigo-700" : ""}
                 ${currentStep?.title === "Delivered" ? "bg-emerald-100 text-emerald-700" : ""}
+                ${order?.isCancel ? "bg-red-100 text-red-600" : ""}
               `}
             >
-              {currentStep?.title || "Pending"}
+              {!order?.isCancel ? currentStep?.title || "Pending" : "Canceled"}
             </div>
             <span className="text-[10px] text-gray-400 font-medium ml-1">
-              {currentStep?.date || "TBD"}
+              {!order?.isCancel ? currentStep?.date || "TBD" : ""}
             </span>
           </div>
         </td>
@@ -111,24 +130,30 @@ export default function OrderTable({ order }) {
                 tabIndex={0}
                 className="dropdown-content z-[1] menu p-2 shadow-xl bg-white rounded-lg w-40 border border-gray-100 mt-2"
               >
-                <li>
+                <li onClick={() => updateOrderStatus(order._id, currrentStepIndex)}>
                   <a className="text-xs font-bold py-2">Update Status</a>
                 </li>
                 <li>
                   <a
                     href={`/dashboard/invoice/${order._id}`}
-                    
                     rel="noopener noreferrer"
                     className="text-xs font-bold py-2 flex items-center gap-2"
                   >
                     Print Invoice
                   </a>
                 </li>
-                <li className="border-t border-gray-50">
-                  <a className="text-xs font-bold py-2 text-error">
-                    Cancel Order
-                  </a>
-                </li>
+                {!order?.isCancel ? (
+                  <li
+                    onClick={() => cancelOrder(order._id)}
+                    className="border-t border-gray-50"
+                  >
+                    <a className="text-xs font-bold py-2 text-error">
+                      Cancel Order
+                    </a>
+                  </li>
+                ) : (
+                  <></>
+                )}
               </ul>
             </div>
           </div>

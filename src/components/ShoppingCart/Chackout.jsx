@@ -17,14 +17,13 @@ import {
 } from "react-icons/md";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { createOder } from "@/action/server/createOder";
+import { createOder } from "@/action/server/order";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
 const Checkout = ({ cartItems = [] }) => {
-
   const session = useSession();
-  const router = useRouter()
+  const router = useRouter();
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
@@ -40,14 +39,13 @@ const Checkout = ({ cartItems = [] }) => {
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
 
-
     // Calculate shiping and delivary date
     const orderDate = new Date();
-      orderDate.setDate(orderDate.getDate() + 1);
+    orderDate.setDate(orderDate.getDate() + 1);
     const shipingDate = orderDate.toLocaleDateString("en-GB");
-    
-      const orderDate2 = new Date();
-      orderDate2.setDate(orderDate2.getDate() + 3);
+
+    const orderDate2 = new Date();
+    orderDate2.setDate(orderDate2.getDate() + 3);
     const delivaryDate = orderDate2.toLocaleDateString("en-GB");
 
     // Construct the final data object
@@ -57,25 +55,40 @@ const Checkout = ({ cartItems = [] }) => {
       phoneNumber: `+88${phone}`,
       deliveryAddress: address,
       deliveryCost: 60,
-      subtotal: subtotal+60,
+      subtotal: subtotal + 60,
       paymentMethod: "Cash on Delivery",
-      steps : [
-        { title: "Order Placed", date: new Date().toLocaleDateString("en-GB"), status: "completed" },
-        { title: "Processing", date: new Date().toLocaleDateString("en-GB"),  status: "current" },
-        { title: "Shipped", date:"Expected  " + shipingDate, status: "upcoming" },
-        { title: "Delivered", date:"Expected  " + delivaryDate, status: "upcoming" },
+      steps: [
+        {
+          title: "Order Placed",
+          date: new Date().toLocaleDateString("en-GB"),
+          status: "completed",
+        },
+        {
+          title: "Processing",
+          date: new Date().toLocaleDateString("en-GB"),
+          status: "current",
+        },
+        {
+          title: "Shipped",
+          date: "Expected  " + shipingDate,
+          status: "upcoming",
+        },
+        {
+          title: "Delivered",
+          date: "Expected  " + delivaryDate,
+          status: "upcoming",
+        },
       ],
     };
 
     const result = await createOder(payload);
 
-    if(result.success){
-        router.push('/my-orders')
-        Swal.fire("success", "Add Oder Successfully", "success")
-    }
-    else{
-        router.push("/")
-        Swal.fire("Opps!", "Sumething Wrong", "error")
+    if (result.success) {
+      router.push("/my-orders");
+      Swal.fire("success", "Add Oder Successfully", "success");
+    } else {
+      router.push("/");
+      Swal.fire("Opps!", "Sumething Wrong", "error");
     }
   };
 
@@ -247,11 +260,11 @@ const Checkout = ({ cartItems = [] }) => {
                     </div>
                   ))}
                   <div className="flex justify-between text-gray-600 pt-5 -pb-5">
-                <span className="font-medium">Deliverey Cost</span>
-                <span className="text-success font-bold uppercase text-xs badge badge-success badge-outline">
-                  60 tk
-                </span>
-              </div>
+                    <span className="font-medium">Deliverey Cost</span>
+                    <span className="text-success font-bold uppercase text-xs badge badge-success badge-outline">
+                      60 tk
+                    </span>
+                  </div>
                 </div>
 
                 {/* Calculation Grid */}

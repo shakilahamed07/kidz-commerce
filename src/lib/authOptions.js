@@ -55,19 +55,21 @@ export const authOptions = {
       if (token) {
         session.role = token?.role;
         session.email = token?.email;
+        session.user.role = token.role;
+        session.user.email = token.email;
       }
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
+        const dbUser = await connect(collctions.USERS).findOne({
+          email: user?.email,
+        });
         if (account?.provider == "google") {
-          const dbUser = await connect(collctions.USERS).findOne({
-            email: user?.email
-          });
           token.role = dbUser?.role;
           token.email = dbUser?.email;
         } else {
-          token.role = user?.role;
+          token.role = dbUser?.role;
           token.email = user?.email;
         }
       }
