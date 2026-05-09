@@ -13,6 +13,9 @@ import {
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import Logo from "@/components/logo";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { GrUpdate } from "react-icons/gr";
 
 export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -28,8 +31,8 @@ export default function DashboardLayout({ children }) {
       icon: <HiOutlineShoppingBag />,
       href: "/dashboard/all-orders",
     },
-    { name: "Profile", icon: <HiOutlineUser />, href: "/dashboard/profile" },
-    { name: "Settings", icon: <HiOutlineCog />, href: "/dashboard/settings" },
+    { name: "Add Product", icon: <IoMdAddCircleOutline size={22} />, href: "/dashboard/add-product" },
+    { name: "Update Product", icon: <GrUpdate size={16} />, href: "/dashboard/update-product" },
   ];
 
   return (
@@ -49,17 +52,9 @@ export default function DashboardLayout({ children }) {
         }`}
       >
         <div className="p-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">
-              K
-            </div>
-            <span className="font-black text-xl tracking-tighter text-gray-800">
-              KIDZ <span className="text-primary">CMS</span>
-            </span>
-          </div>
-
+            <Logo />
           <button
-            className="lg:hidden p-2 text-gray-500"
+            className="lg:hidden p-2 text-gray-500 pl-2"
             onClick={() => setSidebarOpen(false)}
           >
             <HiX size={20} />
@@ -99,9 +94,9 @@ export default function DashboardLayout({ children }) {
             >
               <HiMenuAlt2 size={24} />
             </button>
-            <h1 className="text-lg font-bold text-gray-800 lg:hidden uppercase tracking-widest">
-              Kidz
-            </h1>
+            <div className="lg:hidden">
+                <Logo />
+            </div>
           </div>
 
           <div className="flex items-center gap-3">

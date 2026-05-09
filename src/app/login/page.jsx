@@ -43,17 +43,24 @@ export default function Login() {
     const result = await postUser(data);
 
     if (result?.insertedId) {
-      alert(`${result?.insertedId}`);
+      Swal.fire("success", "Registration Successful", "success");
 
       // login user
       const res = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        // redirect: false,
-        callbackUrl: `${callbackurl}`,
-      });
+      email: data.email,
+      password: data.password,
+      // redirect: false,
+      callbackUrl: callbackurl || "/",
+    });
+
+    if (res?.ok) {
+      Swal.fire("success", "Login Sucessfully", "success");
     } else {
-      alert("Sumething wrong!");
+      Swal.fire("success", "Login Sucessfully", "success");
+    }
+    
+    } else {
+      Swal.fire("error", "Already Registered Email", "error");
     }
   };
 

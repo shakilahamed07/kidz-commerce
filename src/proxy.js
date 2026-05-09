@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 const privateRoute = ["/chackout", "/my-orders", "/cart"];
+const adminRoute = ["/dashboard"];
 
 export async function proxy(req) {
   const token = await getToken({ req , secret: process.env.NEXTAUTH_SECRET});
@@ -9,7 +10,17 @@ export async function proxy(req) {
   const reqPath = req.nextUrl.pathname;
   const isPrivateRoute = privateRoute.some((route) =>
     reqPath.startsWith(route),
-);
+  );
+
+  const isAdminRoute = adminRoute.some((route) =>
+    reqPath.startsWith(route),
+  );
+
+  if (Boolean(isAuthenticate && isAdminRoute && token.role !== "admin")) {
+    return NextResponse.redirect(
+      new URL(`/login`, req.url),
+    );
+  }
 
   if (Boolean(!isAuthenticate && isPrivateRoute)) {
     return NextResponse.redirect(
@@ -21,5 +32,5 @@ export async function proxy(req) {
 }
 
 export const config = {
-  matcher: ["/chackout/:path*", "/my-orders/:path*", "/cart/:path*"],
+  matcher: ["/chackout/:path*", "/my-orders/:path*", "/cart/:path*", "/dashboard/:path*"],
 };
