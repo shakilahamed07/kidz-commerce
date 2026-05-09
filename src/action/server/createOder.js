@@ -53,6 +53,7 @@ export const createOder = async (payload) => {
   return { success: Boolean(result.insertedId) };
 };
 
+// get orders by user email
 export const getOrader = async () => {
   const { user } = (await getServerSession(authOptions)) || {};
   if (!user) return [];
@@ -76,6 +77,36 @@ export const getOderById = async (id) => {
     ...result,
     _id: result._id.toString(),
     items: []
+  };
+};
+
+export const getAllOrders = async () => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user.role === "admin") return [];
+
+  const result = await oderCollctions
+    .find()
+    .sort({ oderAt: -1 })
+    .toArray();
+  return result;
+};
+
+// for admin
+export const getOderByIdAdmin = async (id) => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user.role==="admin") return null;
+
+  const query = { _id: new ObjectId(id)};
+  const result = await oderCollctions.findOne(query);
+  return {
+    ...result,
+    _id: result._id.toString(),
+    items: result.items.map(item => {
+      return {
+        ...item,
+        _id: item._id.toString()
+      };
+    })
   };
 };
 
