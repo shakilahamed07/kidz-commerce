@@ -4,7 +4,7 @@ import { MdOutlineWorkspacePremium } from "react-icons/md";
 
 export default function WhyChooseUs() {
   return (
-    <div className="my-20 bg-base-200 py-20 px-6">
+    <div className="py-20 bg-base-200 px-6">
       <section className="">
         <div className="container mx-auto max-w-6xl text-center mb-16">
           <h2 className="sm:text-2xl font-black uppercase mb-4">
