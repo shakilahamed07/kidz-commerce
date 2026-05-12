@@ -140,7 +140,7 @@ export const updateOrderStatusAdmin = async (id, currentIndex) => {
   
   const updateData = {
     $set: {
-        text:"ooopss",
+        deliveryCost: 60,
       }
   };
 

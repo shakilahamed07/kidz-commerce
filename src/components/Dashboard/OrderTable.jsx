@@ -5,6 +5,9 @@ import { HiOutlineDotsVertical, HiOutlineEye } from "react-icons/hi";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { orderCancelAdmin, updateOrderStatusAdmin } from "@/action/server/order";
 import Swal from "sweetalert2";
+import { GrUpdate } from "react-icons/gr";
+import { FaPrint } from "react-icons/fa6";
+import { MdOutlineCancel } from "react-icons/md";
 
 export default function OrderTable({ order }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -100,7 +103,7 @@ export default function OrderTable({ order }) {
                 ${order?.isCancel ? "bg-red-100 text-red-600" : ""}
               `}
             >
-              {!order?.isCancel ? currentStep?.title || "Pending" : "Canceled"}
+              {!order?.isCancel ? currentStep?.status === "current" && currentStep?.title=="Delivered" ? "Delivering.." : currentStep?.title || "Pending" : "Canceled"}
             </div>
             <span className="text-[10px] text-gray-400 font-medium ml-1">
               {!order?.isCancel ? currentStep?.date || "TBD" : ""}
@@ -131,7 +134,7 @@ export default function OrderTable({ order }) {
                 className="dropdown-content z-[1] menu p-2 shadow-xl bg-white rounded-lg w-40 border border-gray-100 mt-2"
               >
                 <li onClick={() => updateOrderStatus(order._id, currrentStepIndex)}>
-                  <a className="text-xs font-bold py-2">Update Status</a>
+                  <a className="text-xs font-bold py-2"><GrUpdate className="text-primary" /> Update Status</a>
                 </li>
                 <li>
                   <a
@@ -139,18 +142,18 @@ export default function OrderTable({ order }) {
                     rel="noopener noreferrer"
                     className="text-xs font-bold py-2 flex items-center gap-2"
                   >
-                    Print Invoice
+                    <FaPrint className="text-primary" /> Print Invoice
                   </a>
                 </li>
                 {!order?.isCancel ? (
-                  <li
+                  currentStep.title == "Delivered" || currentStep.title == "Shipped" ? <></> : (<li
                     onClick={() => cancelOrder(order._id)}
                     className="border-t border-gray-50"
                   >
                     <a className="text-xs font-bold py-2 text-error">
-                      Cancel Order
+                      <MdOutlineCancel className="text-error" /> Cancel Order
                     </a>
-                  </li>
+                  </li>)
                 ) : (
                   <></>
                 )}

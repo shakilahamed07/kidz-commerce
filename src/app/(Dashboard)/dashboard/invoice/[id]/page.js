@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getOderByIdAdmin } from "@/action/server/order";
+import { BsPrinterFill } from "react-icons/bs";
 
 export default function InvoicePage() {
   const { id } = useParams();
@@ -32,7 +33,7 @@ export default function InvoicePage() {
           onClick={handlePrint}
           className="btn btn-primary px-10 shadow-lg font-bold"
         >
-          Print Now
+          <BsPrinterFill size={22} /> Print Now
         </button>
       </div>
 

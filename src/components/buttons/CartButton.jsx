@@ -34,8 +34,8 @@ export default function CartButton({product}) {
 
   return (
     <div>
-      <button disabled={session.status == 'loading' || loading} onClick={handelCart} className="btn btn-primary">
-        <FaShoppingCart /> Add to Cart
+      <button disabled={session.status == 'loading' || loading} onClick={handelCart} className="btn btn-primary w-full">
+        <FaShoppingCart />Add to Cart
       </button>
     </div>
   );

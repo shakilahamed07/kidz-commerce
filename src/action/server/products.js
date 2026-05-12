@@ -1,8 +1,20 @@
 "use server"
 
+import { authOptions } from "@/lib/authOptions";
 import { collctions, connect } from "@/lib/connect"
 import { ObjectId } from "mongodb"
+import { getServerSession } from "next-auth";
 import { cache } from "react";
+
+export const addProduct = cache(async (productData) => {
+    const user = (await getServerSession(authOptions)) || {};
+      if (user?.role !== "admin") {
+         return { success: false, message: "Unauthorized Access" };
+      }
+      
+    const result = await connect(collctions.PRODUCTS).insertOne(productData);
+    return { success: result.acknowledged, productId: result.insertedId.toString() };
+});
 
 export const GetProducts = cache(async () => {
     const result = await connect(collctions.PRODUCTS).find().toArray();
