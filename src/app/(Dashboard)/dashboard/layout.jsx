@@ -22,7 +22,6 @@ export default function DashboardLayout({ children }) {
   const session = useSession();
   const Router = useRouter();
   const pathName = usePathname();
-  console.log(pathName);
 
   const menuItems = [
     { name: "Overview", icon: <HiOutlineViewGrid />, href: "/dashboard" },

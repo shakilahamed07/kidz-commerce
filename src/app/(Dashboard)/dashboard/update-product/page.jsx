@@ -58,7 +58,7 @@ export default async function AllOrders() {
                         <HiOutlineShoppingBag size={48} />
                       </span>
                       <p className="text-gray-400 font-bold">
-                        No orders found yet.
+                        No product found yet.
                       </p>
                     </div>
                   </td>

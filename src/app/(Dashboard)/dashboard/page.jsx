@@ -1,5 +1,6 @@
 import { authOptions } from '@/lib/authOptions';
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 import React from 'react';
 import { 
   HiOutlineTrendingUp, 
@@ -20,7 +21,7 @@ export default async function DashBoard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 sm:mr-5">
       {/* Welcome Section */}
       <div>
         <h1 className="text-2xl font-black text-gray-800">Dashboard Overview</h1>
@@ -36,7 +37,7 @@ export default async function DashBoard() {
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{stat.title}</p>
                 <h3 className="text-2xl font-black text-gray-800 mt-1">{stat.value}</h3>
               </div>
-              <div className={`${stat.color} p-3 rounded-xl text-white text-2xl`}>
+              <div className={`${stat.color} p-3 rounded-xl text-white text-2xl `}>
                 {stat.icon}
               </div>
             </div>
@@ -52,7 +53,9 @@ export default async function DashBoard() {
         <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm">
           <div className="p-6 border-b border-gray-50 flex justify-between items-center">
             <h3 className="font-bold text-gray-800">Recent Orders</h3>
-            <button className="btn btn-ghost btn-xs text-primary">View All</button>
+            <Link href="/dashboard/all-orders" className="btn btn-ghost btn-xs text-primary">
+              View All
+            </Link>
           </div>
           <div className="overflow-x-auto">
             <table className="table w-full">
@@ -70,18 +73,6 @@ export default async function DashBoard() {
                   <td>Abdur Rahman</td>
                   <td><span className="badge badge-success badge-sm text-white">Delivered</span></td>
                   <td className="font-bold">৳ 1,200</td>
-                </tr>
-                <tr>
-                  <td>#ORD-8851</td>
-                  <td>Fatima Akter</td>
-                  <td><span className="badge badge-warning badge-sm text-white">Pending</span></td>
-                  <td className="font-bold">৳ 450</td>
-                </tr>
-                <tr>
-                  <td>#ORD-9920</td>
-                  <td>Sumon Ahmed</td>
-                  <td><span className="badge badge-info badge-sm text-white">Shipped</span></td>
-                  <td className="font-bold">৳ 2,100</td>
                 </tr>
               </tbody>
             </table>

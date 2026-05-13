@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { MdDeleteForever, MdOutlineCancel } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { deleteProductAdmin } from "@/action/server/products";
+import Link from "next/link";
 
 export default function ProductTable({ product }) {
 
@@ -51,7 +52,7 @@ export default function ProductTable({ product }) {
         <td>
           <Image
             className="rounded-xl"
-            src={product.image}
+            src={product?.image || "/placeholder.png"}
             alt="image"
             width={50}
             height={50}
@@ -89,9 +90,9 @@ export default function ProductTable({ product }) {
         {/* Action Buttons */}
         <td className="text-right px-6">
           <div className="flex justify-end items-center gap-3">
-            <a className="text-xs font-bold p-2 rounded-sm bg-gray-100 hover:bg-gray-200 cursor-pointer">
+            <Link href={`/dashboard/update-product/${product._id}`} className="text-xs font-bold p-2 rounded-sm bg-gray-100 hover:bg-gray-200 cursor-pointer">
               <FiEdit size={18} />
-            </a>
+            </Link>
             <a
               onClick={() => deleteProduct(product._id)}
               className="text-xs font-bold p-2 rounded-sm bg-gray-100 hover:bg-gray-200 cursor-pointer"

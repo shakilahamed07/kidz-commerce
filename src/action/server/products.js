@@ -40,3 +40,14 @@ export const deleteProductAdmin = async (id) => {
     revalidatePath("/dashboard/update-product");
     return { success: result.deletedCount > 0 };
 }
+
+export const updateProductAdmin = async (id, productData) => {
+    const user = (await getServerSession(authOptions)) || {};
+      if (user?.role !== "admin") {
+         return { success: false, message: "Unauthorized Access" };
+      }
+
+    const query = { _id: new ObjectId(id)}
+    const result = await connect(collctions.PRODUCTS).updateOne(query, { $set: productData });
+    return { success: result.modifiedCount > 0 };
+}
